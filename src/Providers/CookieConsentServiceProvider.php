@@ -2,6 +2,7 @@
 
 namespace EZ\CookieConsent\Providers;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use EZ\CookieConsent\Services\CookieConsentService;
 
@@ -21,9 +22,6 @@ class CookieConsentServiceProvider extends ServiceProvider
 
         // Setup loading of the config file
         $this->mergeConfigFrom(__DIR__."/../config/cookieconsent.php", "cookieconsent");
-
-        // Setup loading of the views
-        $this->loadViewsFrom(__DIR__."/../resources/views", "cookieconsent");
     }
     
     /**
@@ -33,19 +31,24 @@ class CookieConsentServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // Setup publishing of the config file
-        $this->publishes([
-            __DIR__."/../config/cookieconsent.php" => config_path("cookieconsent.php"),
-        ], "config");
+        // Load package routes
+        $this->loadRoutesFrom(__DIR__.'/../routes.php');
+        
+        // Load package views
+        $this->loadViewsFrom(__DIR__."/../resources/views", "cookieconsent");
 
-        // Setup publishing of the views
+        // Setup publishing of the config file
+        $this->publishes([__DIR__."/../config/cookieconsent.php" => config_path("cookieconsent.php")], "config");
+
+        // Setup publishing of the views & vue components
         $this->publishes([
-            __DIR__."/../resources/views" => base_path("resources/views/vendor/cookieconsent")
-        ], "views");
+            __DIR__."/../resources/views" => base_path("resources/views/vendor/cookieconsent"),
+            __DIR__."/../resources/js/components" => base_path("resources/js/components"),
+        ], "frontend");
 
         // Compose the cookie consent dialog view
-        View::composer("cookie-consent::dialog", function($view) {
-            $view->with("consentCookieSet", app("cookieconsent")->cookieHasBeenSet());
+        View::composer("cookieconsent::dialog", function($view) {
+            $view->with("consentCookieSet", app("cookie-consent")->cookieHasBeenSet());
         });
     }
 }

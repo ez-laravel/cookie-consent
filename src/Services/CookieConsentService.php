@@ -2,9 +2,9 @@
 
 namespace EZ\CookieConsent\Services;
 
-use Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Cookie;
 
 class CookieConsentService
 {

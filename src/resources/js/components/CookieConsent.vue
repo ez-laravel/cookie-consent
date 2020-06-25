@@ -3,14 +3,20 @@
 
         <!-- Cookie -->
         <div class="cookie-consent__dialog elevation-2" @click.stop="">
+
+            <!-- Title -->
             <div class="cookie-consent__title">
-                <slot name="header">
+                <slot name="title">
                     Cookie Consent
                 </slot>
             </div>
+
+            <!-- Message -->
             <div class="cookie-consent__message">
                 <slot></slot>
             </div>
+
+            <!-- Actions -->
             <div class="cookie-consent__actions">
                 <div class="cookie-consent__action">
                     <button class="cookie-consent__agree" @click="onClickButton">
@@ -24,6 +30,7 @@
                     </button>
                 </div>
             </div>
+
         </div>
 
     </div>
@@ -100,7 +107,6 @@
                 font-size: 1.6em;
                 font-weight: 600;
                 margin: 0 0 30px 0;
-                font-family: 'Playfair Display', serif;
             }
             .cookie-consent__message {
                 p {
@@ -133,8 +139,8 @@
                         transition: all .3s;
                         box-sizing: border-box;
                         background-color: #00994a;
-                        .far {
-                            margin: 0 0 0 10px;
+                        .far, .fas, .svg-inline--fa {
+                            margin: 0 0 0 6px;
                         }
                         &:hover {
                             background-color: #008842;
