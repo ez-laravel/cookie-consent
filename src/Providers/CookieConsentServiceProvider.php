@@ -15,6 +15,9 @@ class CookieConsentServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Register the route service provider
+        $this->app->register(CookieConsentRouteServiceProvider::class);
+
         // Register the cookie consent service
         $this->app->singleton("cookie-consent", function($app) {
             return new CookieConsentService($app["session"]);
@@ -30,10 +33,7 @@ class CookieConsentServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
-        // Load package routes
-        $this->loadRoutesFrom(__DIR__.'/../routes.php');
-        
+    {        
         // Load package views
         $this->loadViewsFrom(__DIR__."/../resources/views", "cookieconsent");
 
@@ -48,7 +48,7 @@ class CookieConsentServiceProvider extends ServiceProvider
 
         // Compose the cookie consent dialog view
         View::composer("cookieconsent::dialog", function($view) {
-            $view->with("consentCookieSet", app("cookie-consent")->cookieHasBeenSet());
+            $view->with("hasConsent", app("cookie-consent")->hasConsent());
         });
     }
 }

@@ -2,7 +2,7 @@
 
 return [
 
-    // What's the name of the cookie to be set when someone agrees/disagrees with the consent dialog?
-    "cookie_name" => "laravel_consent_cookie",
+    // The key of the session property which will be set when the user answers the cookie consent dialog
+    "session_key" => "laravel_consent_cookie",
 
 ];

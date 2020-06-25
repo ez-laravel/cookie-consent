@@ -2,46 +2,48 @@
 
 namespace EZ\CookieConsent\Services;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Cookie;
+use Illuminate\Session\SessionManager;
 
 class CookieConsentService
 {
-    private $cookieName;
+    private $session;
+    private $sessionKey;
 
-    public function __construct()
+    public function __construct(SessionManager $session)
     {
-        $this->cookieName = config("cookieconsent.cookie_name");
+        $this->session = $session;
+        $this->sessionKey = config("cookieconsent.session_key");
     }
 
     /**
-     * Set cookie
+     * Set cookie consent as 'given'
      * 
-     * @param       Request         The request of the controller method that's calling this method
      * @return      void
      */
-    public function setCookie(Request $request)
+    public function setConsent()
     {
-        // 20 days
-        $aliveFor = 60 * 60 * 24 * 20;
-        
-        // // Set cookie on next request
-        // Cookie::queue($this->cookieName, "consent", $aliveFor);
-
-        $response = new \Illuminate\Http\Response('OK');
-        $response->withCookie(cookie($this->cookieName, "consent", $aliveFor));
-
-        return $response;
+        $this->session->put($this->sessionKey, "set");
+        $this->session->save();
     }
 
     /**
-     * Cookie has been set
+     * Has (given) consent
      * 
      * @return      boolean
      */
-    public function cookieHasBeenSet()
+    public function hasConsent()
     {
-        return !is_null(Cookie::get($this->cookieName)) ? true : false;
+        return !is_null($this->session->get($this->sessionKey));
+    }
+
+    /**
+     * Clear any consent that has been given
+     * 
+     * @return      void
+     */
+    public function clear()
+    {
+        return $this->session->forget($this->sessionKey);
     }
 }

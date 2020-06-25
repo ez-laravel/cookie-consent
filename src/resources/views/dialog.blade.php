@@ -2,7 +2,7 @@
     agree-text="Agree"
     disagree-text="Disagree"
     api-endpoint="{{ route('cookie-consent.consent') }}"
-    :cookie-set="{{ json_encode($consentCookieSet) }}">
+    :cookie-set="{{ json_encode($hasConsent) }}">
     <template v-slot:title>
         Cookie Consent
     </template>

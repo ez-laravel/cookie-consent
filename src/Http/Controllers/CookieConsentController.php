@@ -3,13 +3,14 @@
 namespace EZ\CookieConsent\Http\Controllers;
 
 use CookieConsent;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class CookieConsentController extends Controller
 {
-    public function getConsent(Request $request)
+    public function getConsent()
     {
-        return CookieConsent::setCookie($request);
+        CookieConsent::setConsent();
+
+        return response(200);
     }
 }
