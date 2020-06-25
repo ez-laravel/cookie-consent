@@ -1,0 +1,36 @@
+{
+    "name": "ez-laravel/cookie-consent",
+    "description": "Easy Laravel Cookie Consent",
+    "authors": [
+        {
+            "name": "Nick Verheijen",
+            "email": "verheijen.webdevelopment@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "EZ\\CookieConsent\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EZ\\CookieConsent\\Tests\\": "tests/"
+        }
+    },
+    "require": {},
+    "require-dev": {},
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "EZ\\CookieConsent\\Providers\\CookieConsentServiceProvider"
+            ],
+            "aliases": {
+                "CookieConsent": "EZ\\CookieConsent\\Facades\\CookieConsentFacade"
+            }
+        }
+    }
+}
