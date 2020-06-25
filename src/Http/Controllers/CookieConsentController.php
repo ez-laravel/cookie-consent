@@ -10,10 +10,6 @@ class CookieConsentController extends Controller
 {
     public function getConsent(Request $request)
     {
-        // Set the consent cookie
-        CookieConsent::setCookie($request);
-
-        // Return 200 status code
-        return response(200);
+        return CookieConsent::setCookie($request);
     }
 }

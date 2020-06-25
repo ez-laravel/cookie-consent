@@ -26,8 +26,13 @@ class CookieConsentService
         // 20 days
         $aliveFor = 60 * 60 * 24 * 20;
         
-        // Set cookie on next request
-        Cookie::queue($this->cookieName, "consent", $aliveFor);
+        // // Set cookie on next request
+        // Cookie::queue($this->cookieName, "consent", $aliveFor);
+
+        $response = new \Illuminate\Http\Response('OK');
+        $response->withCookie(cookie($this->cookieName, "consent", $aliveFor));
+
+        return $response;
     }
 
     /**
